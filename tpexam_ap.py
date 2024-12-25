@@ -113,10 +113,15 @@ def ask_questions(questions,category,questions_count, time_per_question, user_id
 
 def save_result(user_id, users,questions_count,category, score):
     """Save the result of a quiz for a user."""
-    current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    users[user_id]['history'].append({'date': current_date, 'category':category, 'score': f"{score}/{questions_count}", 'quit': False})
-    save_users(users)
-    print(f"\n{Colors.BOLD}Your final score is: {Colors.OKCYAN}{score}/{questions_count}{Colors.ENDC}")
+    
+    if score == "":
+         save_users(users)
+    else:
+        print("test")
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        users[user_id]['history'].append({'date': current_date, 'category':category, 'score': f"{score}/{questions_count}", 'quit': False})
+        save_users(users)
+        print(f"\n{Colors.BOLD}Your final score is: {Colors.OKCYAN}{score}/{questions_count}{Colors.ENDC}")
 
 def export_results_to_csv(user_id, users):
     """Export a user's results to a CSV file."""
@@ -132,6 +137,7 @@ def start_quiz():
     """Start the quiz application."""
     users = load_users()  
     user_id = create_user_profile(users) 
+    save_result(user_id, users, "", "", "")
 
     while True:
         with open("questions.json", 'r') as f:
