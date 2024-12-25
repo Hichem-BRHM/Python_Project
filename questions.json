@@ -1,0 +1,394 @@
+{
+  "Programming": [
+    {
+      "question": "What is the function to display a message in Python?",
+      "options": ["print()", "echo()", "show()", "output()"],
+      "correct_answer": "print()"
+    },
+    {
+      "question": "What data type is returned by `len()` in Python?",
+      "options": ["int", "str", "list", "float"],
+      "correct_answer": "int"
+    },
+    {
+      "question": "Which method is used to add an element to a list?",
+      "options": ["add()", "insert()", "append()", "push()"],
+      "correct_answer": "append()"
+    },
+    {
+      "question": "What do you call a function that calls itself?",
+      "options": ["Iterative", "Recursive", "Anonymous", "Generic"],
+      "correct_answer": "Recursive"
+    },
+    {
+      "question": "What keyword is used to define a function in Python?",
+      "options": ["function", "def", "fun", "declare"],
+      "correct_answer": "def"
+    },
+    {
+      "question": "How do you declare a global variable in Python?",
+      "options": [
+        "global var_name",
+        "var_name global",
+        "global: var_name",
+        "declare global var_name"
+      ],
+      "correct_answer": "global var_name"
+    },
+    {
+      "question": "What method is used to get the length of a string in Python?",
+      "options": ["length()", "len()", "size()", "str_len()"],
+      "correct_answer": "len()"
+    },
+    {
+      "question": "What does `PEP` stand for in Python?",
+      "options": [
+        "Python Execution Protocol",
+        "Python Enhancement Proposal",
+        "Programming Execution Plan",
+        "Process Extension Plan"
+      ],
+      "correct_answer": "Python Enhancement Proposal"
+    },
+    {
+      "question": "Which Python library is used for data processing?",
+      "options": ["NumPy", "DataHandler", "SciKit", "Pandas"],
+      "correct_answer": "Pandas"
+    },
+    {
+      "question": "What is the LIFO data structure?",
+      "options": ["Queue", "Deque", "Stack", "Priority Queue"],
+      "correct_answer": "Stack"
+    },
+    {
+      "question": "What is the default value of the `end` argument in `print()`?",
+      "options": ["''", "' '", "'\\n'", "'\\t'"],
+      "correct_answer": "'\\n'"
+    },
+    {
+      "question": "Which Python module is used to handle JSON files?",
+      "options": ["json", "filejson", "os", "csv"],
+      "correct_answer": "json"
+    },
+    {
+      "question": "What does `type(42.0)` return?",
+      "options": [
+        "<class 'int'>",
+        "<class 'float'>",
+        "<class 'complex'>",
+        "<class 'decimal'>"
+      ],
+      "correct_answer": "<class 'float'>"
+    },
+    {
+      "question": "What is the output of `print(2**3)`?",
+      "options": ["6", "8", "9", "16"],
+      "correct_answer": "8"
+    },
+    {
+      "question": "Which method is used to split a string by a delimiter in Python?",
+      "options": ["split()", "divide()", "tokenize()", "parse()"],
+      "correct_answer": "split()"
+    },
+    {
+      "question": "What symbol is used for a comment in Python?",
+      "options": ["//", "#", "--", "/*"],
+      "correct_answer": "#"
+    },
+    {
+      "question": "What command is used to install Python libraries?",
+      "options": [
+        "install library",
+        "pip install",
+        "python install",
+        "lib add"
+      ],
+      "correct_answer": "pip install"
+    },
+    {
+      "question": "How do you convert a string to an integer?",
+      "options": ["int()", "convert()", "to_int()", "str_to_int()"],
+      "correct_answer": "int()"
+    },
+    {
+      "question": "What keyword is used to catch exceptions?",
+      "options": ["catch", "except", "try", "throw"],
+      "correct_answer": "except"
+    },
+    {
+      "question": "What is the operator for integer division in Python?",
+      "options": ["%", "//", "/", "**"],
+      "correct_answer": "//"
+    }
+  ],
+  "Networks": [
+    {
+      "question": "What is an IP address?",
+      "options": [
+        "A unique identifier of a computer on a network",
+        "The name of a website",
+        "A type of network",
+        "A communication protocol"
+      ],
+      "correct_answer": "A unique identifier of a computer on a network"
+    },
+    {
+      "question": "Which protocol is used to send emails?",
+      "options": ["HTTP", "SMTP", "FTP", "SNMP"],
+      "correct_answer": "SMTP"
+    },
+    {
+      "question": "What does DNS stand for?",
+      "options": [
+        "Domain Name System",
+        "Data Network Service",
+        "Direct Name Server",
+        "Dynamic Network Sharing"
+      ],
+      "correct_answer": "Domain Name System"
+    },
+    {
+      "question": "What is the standard port for HTTP?",
+      "options": ["80", "443", "21", "25"],
+      "correct_answer": "80"
+    },
+    {
+      "question": "Which layer of the OSI model handles MAC addresses?",
+      "options": ["Application", "Transport", "Data Link", "Network"],
+      "correct_answer": "Data Link"
+    },
+    {
+      "question": "Which protocol is used to secure communications on the Internet?",
+      "options": ["HTTP", "HTTPS", "FTP", "SMTP"],
+      "correct_answer": "HTTPS"
+    },
+    {
+      "question": "What is a VPN?",
+      "options": [
+        "Virtual Private Network",
+        "Virtual Public Network",
+        "Verified Private Network",
+        "Verified Public Network"
+      ],
+      "correct_answer": "Virtual Private Network"
+    },
+    {
+      "question": "What is the size of an IPv4 address?",
+      "options": ["16 bits", "32 bits", "64 bits", "128 bits"],
+      "correct_answer": "32 bits"
+    },
+    {
+      "question": "Which protocol is used for domain name resolution?",
+      "options": ["DNS", "DHCP", "IP", "HTTP"],
+      "correct_answer": "DNS"
+    },
+    {
+      "question": "What is the function of DHCP?",
+      "options": [
+        "Assign dynamic IP addresses",
+        "Manage VPN connections",
+        "Transfer files",
+        "Establish secure tunnels"
+      ],
+      "correct_answer": "Assign dynamic IP addresses"
+    },
+    {
+      "question": "What does NAT stand for in networking?",
+      "options": [
+        "Network Address Translation",
+        "Network Access Time",
+        "Node Access Translation",
+        "Network Allocation Table"
+      ],
+      "correct_answer": "Network Address Translation"
+    },
+    {
+      "question": "What is the difference between TCP and UDP?",
+      "options": [
+        "TCP is reliable, UDP is not",
+        "UDP is slower than TCP",
+        "TCP is used for video",
+        "UDP is used for emails"
+      ],
+      "correct_answer": "TCP is reliable, UDP is not"
+    },
+    {
+      "question": "What is a MAC address?",
+      "options": [
+        "The physical address of a device",
+        "The IP address of a network",
+        "The address of a website",
+        "A networking protocol"
+      ],
+      "correct_answer": "The physical address of a device"
+    },
+    {
+      "question": "What does HTTP stand for?",
+      "options": [
+        "HyperText Transfer Protocol",
+        "HyperText Transmission Protocol",
+        "Host Transfer Protocol",
+        "HyperText Transaction Protocol"
+      ],
+      "correct_answer": "HyperText Transfer Protocol"
+    },
+    {
+      "question": "What is the standard port for HTTPS?",
+      "options": ["80", "443", "21", "8080"],
+      "correct_answer": "443"
+    },
+    {
+      "question": "What does LAN stand for?",
+      "options": [
+        "Local Area Network",
+        "Large Access Node",
+        "Linked Area Network",
+        "Limited Access Network"
+      ],
+      "correct_answer": "Local Area Network"
+    },
+    {
+      "question": "What does a router do?",
+      "options": [
+        "Connects different networks together",
+        "Assigns dynamic IP addresses",
+        "Controls Internet access",
+        "Transfers files between computers"
+      ],
+      "correct_answer": "Connects different networks together"
+    },
+    {
+      "question": "Which command is used to check network connectivity?",
+      "options": ["ping", "traceroute", "netstat", "ifconfig"],
+      "correct_answer": "ping"
+    },
+    {
+      "question": "What is a peer-to-peer (P2P) network?",
+      "options": [
+        "A network where each device can act as a client or server",
+        "A centralized network",
+        "A network for large servers",
+        "A network used exclusively for gaming"
+      ],
+      "correct_answer": "A network where each device can act as a client or server"
+    },
+    {
+      "question": "What is the main purpose of a firewall?",
+      "options": [
+        "Protect the network from unauthorized access",
+        "Assign IP addresses",
+        "Connect devices to the network",
+        "Manage web servers"
+      ],
+      "correct_answer": "Protect the network from unauthorized access"
+    }
+  ],
+
+  "General Knowledge": [
+    {
+      "question": "What is the largest ocean in the world?",
+      "options": ["Atlantic", "Pacific", "Indian", "Arctic"],
+      "correct_answer": "Pacific"
+    },
+    {
+      "question": "What is the capital of Australia?",
+      "options": ["Sydney", "Melbourne", "Canberra", "Perth"],
+      "correct_answer": "Canberra"
+    },
+    {
+      "question": "What is the chemical symbol of water?",
+      "options": ["O", "H2", "H2O", "OH"],
+      "correct_answer": "H2O"
+    },
+    {
+      "question": "Which country has the largest population in the world?",
+      "options": ["India", "United States", "China", "Indonesia"],
+      "correct_answer": "China"
+    },
+    {
+      "question": "What is the fastest land animal?",
+      "options": ["Lion", "Cheetah", "Antelope", "Horse"],
+      "correct_answer": "Cheetah"
+    },
+    {
+      "question": "Which planet is known as the Red Planet?",
+      "options": ["Mars", "Jupiter", "Venus", "Mercury"],
+      "correct_answer": "Mars"
+    },
+    {
+      "question": "How many colors are there in a rainbow?",
+      "options": ["5", "6", "7", "8"],
+      "correct_answer": "7"
+    },
+    {
+      "question": "What is the highest peak in the world?",
+      "options": [
+        "Mont Blanc",
+        "Mount Everest",
+        "Mount Kilimanjaro",
+        "Mount Fuji"
+      ],
+      "correct_answer": "Mount Everest"
+    },
+    {
+      "question": "Which country is known for the Eiffel Tower?",
+      "options": ["Italy", "France", "Spain", "Germany"],
+      "correct_answer": "France"
+    },
+    {
+      "question": "What is the currency used in Japan?",
+      "options": ["Yuan", "Yen", "Won", "Ringgit"],
+      "correct_answer": "Yen"
+    },
+    {
+      "question": "Which scientist discovered the law of gravity?",
+      "options": ["Albert Einstein", "Isaac Newton", "Galileo", "Copernicus"],
+      "correct_answer": "Isaac Newton"
+    },
+    {
+      "question": "What is the smallest country in the world?",
+      "options": ["Monaco", "Liechtenstein", "Vatican", "Malta"],
+      "correct_answer": "Vatican"
+    },
+    {
+      "question": "What is the official language of Brazil?",
+      "options": ["Spanish", "Portuguese", "French", "English"],
+      "correct_answer": "Portuguese"
+    },
+    {
+      "question": "Which continent is also a country?",
+      "options": ["Australia", "Africa", "Europe", "Asia"],
+      "correct_answer": "Australia"
+    },
+    {
+      "question": "Which sport is known as the 'king of sports'?",
+      "options": ["Basketball", "Football", "Tennis", "Cricket"],
+      "correct_answer": "Football"
+    },
+    {
+      "question": "In which country is the Statue of Liberty located?",
+      "options": ["Canada", "United States", "England", "Australia"],
+      "correct_answer": "United States"
+    },
+    {
+      "question": "What is the largest island in the world?",
+      "options": ["Madagascar", "Greenland", "Borneo", "Iceland"],
+      "correct_answer": "Greenland"
+    },
+    {
+      "question": "What is the hottest desert in the world?",
+      "options": ["Sahara", "Atacama", "Kalahari", "Gobi"],
+      "correct_answer": "Sahara"
+    },
+    {
+      "question": "How many continents are there in the world?",
+      "options": ["5", "6", "7", "8"],
+      "correct_answer": "7"
+    },
+    {
+      "question": "What is the name of the star closest to Earth?",
+      "options": ["Moon", "Sun", "Sirius", "Alpha Centauri"],
+      "correct_answer": "Sun"
+    }
+  ]
+}
