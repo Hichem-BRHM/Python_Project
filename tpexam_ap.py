@@ -130,37 +130,47 @@ def export_results_to_csv(user_id, users):
 
 def start_quiz():
     """Start the quiz application."""
-    users = load_users()
-    user_id = create_user_profile(users)
+    users = load_users()  
+    user_id = create_user_profile(users) 
 
-    with open("questions.json", 'r') as f:
-        questions_by_category = json.load(f)
+    while True:
+        with open("questions.json", 'r') as f:
+            questions_by_category = json.load(f)
 
-    categories = {str(i+1): category for i, category in enumerate(questions_by_category.keys())}
+        categories = {str(i+1): category for i, category in enumerate(questions_by_category.keys())}
 
-    print(f"\n{Colors.HEADER}Choose a category:{Colors.ENDC}")
-    for key, value in categories.items():
-        print(f"{key}. {value}")
+        while True:
+            print(f"\n{Colors.HEADER}Choose a category (-1 to quit Quiz):{Colors.ENDC}")
+            for key, value in categories.items():
+                print(f"{key}. {value}")
 
-    choice = input("Enter the number of the category: ")
-    is_invalid_choice = not choice.isdigit() or choice not in categories.keys()
-    if is_invalid_choice:
-        print("Invalid category. Returning to the main menu.")
-        return
-    category = categories.get(choice)
+            choice = input("Enter the number of the category: ")
 
-    print(f"\nYou chose the category: {Colors.HEADER}{category}{Colors.ENDC}")
-    questions = questions_by_category[category]
-    
-    questions_count = len(questions)
-    result = ask_questions(questions,category,questions_count , TIME_PER_SECOND, user_id, users)
-    if(not result[1]):
-        save_result(user_id, users, questions_count,category, result[0])
-    
-    
-    export_choice = input(f"{Colors.WARNING}Would you like to export your results to a CSV file? (y/n):{Colors.ENDC} ")
-    if export_choice.lower() == 'y':
-        export_results_to_csv(user_id, users)
+            if choice.lower() == "exit" or choice == "-1":
+                print("Exiting Quiz.")
+                return
+
+            if choice.isdigit() and choice in categories.keys():
+                break  
+
+            print("Invalid category. Please try again.")
+
+        category = categories.get(choice)
+
+        print(f"\nYou chose the category: {Colors.HEADER}{category}{Colors.ENDC}")
+        questions = questions_by_category[category]
+
+        questions_count = len(questions)
+        result = ask_questions(questions, category, questions_count, TIME_PER_SECOND, user_id, users)
+        
+        if not result[1]:
+            save_result(user_id, users, questions_count, category, result[0])
+
+        export_choice = input(f"{Colors.WARNING}Would you like to export your results to a CSV file? (y/n):{Colors.ENDC} ")
+        if export_choice.lower() == 'y':
+            export_results_to_csv(user_id, users)
+
+        print("Returning to main menu...\n")
 
 # Start the application
 if __name__ == "__main__":
