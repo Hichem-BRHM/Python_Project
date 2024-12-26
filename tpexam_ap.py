@@ -20,16 +20,14 @@ class Colors:
 
 def load_users(file='users.json'):
     """Load user data from a JSON file."""
-    # if not os.path.exists(file):
-    #     with open(file, 'w') as f:
-    #         json.dump({}, f)  
+    if not os.path.exists(file):
+        with open(file, 'w') as f:
+            json.dump({}, f)  
     with open(file, 'r') as f:
-        # try:
-        #     return json.load(f)
-        # except json.JSONDecodeError:
-        #     return {}
-        return json.load(f)
-    return {}
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
     
     
 
