@@ -390,5 +390,90 @@
       "options": ["Moon", "Sun", "Sirius", "Alpha Centauri"],
       "correct_answer": "Sun"
     }
+  ],
+  
+  "Science": [
+    {
+      "question": "What is the chemical symbol for gold?",
+      "options": ["Ag", "Au", "Gd", "Go"],
+      "correct_answer": "Au"
+    },
+    {
+      "question": "What is the most abundant gas in Earth's atmosphere?",
+      "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+      "correct_answer": "Nitrogen"
+    },
+    {
+      "question": "What is the speed of light in a vacuum?",
+      "options": [
+        "300,000 kilometers per second",
+        "150,000 kilometers per second",
+        "1,000 kilometers per second",
+        "30,000 kilometers per second"
+      ],
+      "correct_answer": "300,000 kilometers per second"
+    },
+    {
+      "question": "What is the basic unit of life?",
+      "options": ["Cell", "Atom", "Molecule", "Organ"],
+      "correct_answer": "Cell"
+    },
+    {
+      "question": "What is the process by which plants make their food?",
+      "options": ["Respiration", "Photosynthesis", "Transpiration", "Osmosis"],
+      "correct_answer": "Photosynthesis"
+    },
+    {
+      "question": "What is the hardest natural substance on Earth?",
+      "options": ["Gold", "Iron", "Diamond", "Quartz"],
+      "correct_answer": "Diamond"
+    },
+    {
+      "question": "What is the powerhouse of the cell?",
+      "options": ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"],
+      "correct_answer": "Mitochondria"
+    },
+    {
+      "question": "Which planet has the most moons?",
+      "options": ["Jupiter", "Saturn", "Mars", "Earth"],
+      "correct_answer": "Saturn"
+    },
+    {
+      "question": "What is the pH of pure water?",
+      "options": ["5", "7", "9", "11"],
+      "correct_answer": "7"
+    },
+    {
+      "question": "What force keeps us on the ground?",
+      "options": ["Magnetism", "Gravity", "Friction", "Electricity"],
+      "correct_answer": "Gravity"
+    },
+    {
+      "question": "What is the largest organ in the human body?",
+      "options": ["Heart", "Liver", "Skin", "Lungs"],
+      "correct_answer": "Skin"
+    },
+    {
+      "question": "Which part of the brain controls balance?",
+      "options": ["Cerebrum", "Cerebellum", "Brainstem", "Medulla"],
+      "correct_answer": "Cerebellum"
+    },
+    {
+      "question": "What is the chemical formula for table salt?",
+      "options": ["H2O", "NaCl", "CO2", "KCl"],
+      "correct_answer": "NaCl"
+    },
+    {
+      "question": "What type of blood cells fight infections?",
+      "options": ["Red blood cells", "White blood cells", "Platelets", "Plasma"],
+      "correct_answer": "White blood cells"
+    },
+    {
+      "question": "What is the smallest particle of an element?",
+      "options": ["Molecule", "Atom", "Electron", "Proton"],
+      "correct_answer": "Atom"
+    }
   ]
+}
+
 }
