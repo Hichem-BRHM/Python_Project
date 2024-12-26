@@ -4,7 +4,7 @@ import datetime
 import csv
 import threading
 import time
-import curses
+# import curses
 
 TIME_PER_SECOND = 20  # Time limit per question in seconds
 
@@ -20,14 +20,16 @@ class Colors:
 
 def load_users(file='users.json'):
     """Load user data from a JSON file."""
-    if not os.path.exists(file):
-        with open(file, 'w') as f:
-            json.dump({}, f)  
+    # if not os.path.exists(file):
+    #     with open(file, 'w') as f:
+    #         json.dump({}, f)  
     with open(file, 'r') as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
-            return {}
+        # try:
+        #     return json.load(f)
+        # except json.JSONDecodeError:
+        #     return {}
+        return json.load(f)
+    return {}
     
     
 
@@ -51,7 +53,7 @@ def display_history(user_id, users):
     """Display a user's quiz history."""
     history = users.get(user_id, {}).get('history', [])
     if history:
-        print("\nQuiz History:")
+        print(f"\n{Colors.BOLD}Quiz History:{Colors.ENDC}")
         for entry in history:
             print(f"Date: {entry['date']} - Category: {entry['category']} --> Score: {entry['score']}, Quit: {entry['quit']}")
     else:
@@ -77,6 +79,7 @@ def display_timer(time_left, timer_event, question):
 def ask_questions(questions,category,questions_count, time_per_question, user_id, users):
     """Ask the questions to the user with a time limit for each question."""
     score = 0
+    did_quit = False
     for question in questions:
         print(f"\n{question['question']}")
         for i, option in enumerate(question['options'], 1):
@@ -110,11 +113,12 @@ def ask_questions(questions,category,questions_count, time_per_question, user_id
                     users[user_id]['history'].append({'date': current_date, 'category':category, 'score': f"{score}/{questions_count}", 'quit': True})
                     save_users(users)
                     print("\nYou chose to quit. Your progress has been saved.")
-                    return [score,True]
+                    did_quit = True
+                    return [score,did_quit]
                 else:
                     print(f"{Colors.FAIL}Wrong answer. The correct answer was: {Colors.OKGREEN}{question['correct_answer']}")
                     print(Colors.ENDC)
-    return [score,False]
+    return [score,did_quit]
 
 
 
@@ -146,12 +150,11 @@ def start_quiz():
     user_id = create_user_profile(users) 
     save_result(user_id, users, "", "", "")
 
+    with open("questions.json", 'r') as f:
+        questions_by_category = json.load(f)
+    categories = {str(i+1): category for i, category in enumerate(questions_by_category.keys())}
+
     while True:
-        with open("questions.json", 'r') as f:
-            questions_by_category = json.load(f)
-
-        categories = {str(i+1): category for i, category in enumerate(questions_by_category.keys())}
-
         while True:
             print(f"\n{Colors.HEADER}Choose a category (-1 to quit Quiz):{Colors.ENDC}")
             for key, value in categories.items():
@@ -160,14 +163,14 @@ def start_quiz():
             choice = input("Enter the number of the category: ")
 
             if choice.lower() == "exit" or choice == "-1":
-                print("Exiting Quiz.")
+                print(f"{Colors.BOLD}Exit Quiz.{Colors.ENDC}")
                 return
 
             if choice.isdigit() and choice in categories.keys():
                 break  
             
-            print("\nInvalid category ! Please try again.")
-            print("\nUploading of Categories...... , be patient")
+            print(f"\n{Colors.FAIL}Invalid category! Please try again.{Colors.ENDC}")
+            print(f"\n{Colors.WARNING}Reloading categories, be patient please... {Colors.ENDC}")
 
         category = categories.get(choice)
 
@@ -184,8 +187,8 @@ def start_quiz():
         if export_choice.lower() == 'y':
             export_results_to_csv(user_id, users)
 
-        print("Returning to main menu...\n")
+        print(f"\n{Colors.BOLD}Returning to main menu...{Colors.ENDC}")
 
-# Start the application
+
 if __name__ == "__main__":
     start_quiz()

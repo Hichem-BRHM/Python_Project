@@ -391,7 +391,7 @@
       "correct_answer": "Sun"
     }
   ],
-  
+
   "Science": [
     {
       "question": "What is the chemical symbol for gold?",
@@ -465,7 +465,12 @@
     },
     {
       "question": "What type of blood cells fight infections?",
-      "options": ["Red blood cells", "White blood cells", "Platelets", "Plasma"],
+      "options": [
+        "Red blood cells",
+        "White blood cells",
+        "Platelets",
+        "Plasma"
+      ],
       "correct_answer": "White blood cells"
     },
     {
@@ -474,6 +479,4 @@
       "correct_answer": "Atom"
     }
   ]
-}
-
 }
