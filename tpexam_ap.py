@@ -4,6 +4,7 @@ import datetime
 import csv
 import threading
 import time
+import curses
 
 TIME_PER_SECOND = 20  # Time limit per question in seconds
 
@@ -19,10 +20,16 @@ class Colors:
 
 def load_users(file='users.json'):
     """Load user data from a JSON file."""
-    if os.path.exists(file):
-        with open(file, 'r') as f:
+    if not os.path.exists(file):
+        with open(file, 'w') as f:
+            json.dump({}, f)  
+    with open(file, 'r') as f:
+        try:
             return json.load(f)
-    return {}
+        except json.JSONDecodeError:
+            return {}
+    
+    
 
 def save_users(users, file='users.json'):
     """Save user data to a JSON file."""
@@ -90,15 +97,7 @@ def ask_questions(questions,category,questions_count, time_per_question, user_id
 
             if answer :
                 answer=str(answer).strip()
-                if  answer == "-1":
-                    current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    users[user_id]['history'].append({'date': current_date, 'category':category, 'score': f"{score}/{questions_count}", 'quit': True})
-                    save_users(users)
-                    print("\nYou chose to quit. Your progress has been saved.")
-                    return [score,True]
-                
-                is_valid_choice =  1 <= int(answer) <= len(question['options'])
-                if answer.isdigit() and is_valid_choice:
+                if answer.isdigit() and 1 <= int(answer) <= len(question['options']):
                     choice = int(answer) - 1
                     if question['options'][choice] == question['correct_answer']:
                         print(f"{Colors.OKGREEN}Correct answer!{Colors.ENDC}")
@@ -106,7 +105,15 @@ def ask_questions(questions,category,questions_count, time_per_question, user_id
                     else:
                         print(f"{Colors.FAIL}Wrong answer. The correct answer was: {Colors.OKGREEN}{question['correct_answer']}")
                         print(Colors.ENDC)
-        
+                elif answer == "-1":
+                    current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    users[user_id]['history'].append({'date': current_date, 'category':category, 'score': f"{score}/{questions_count}", 'quit': True})
+                    save_users(users)
+                    print("\nYou chose to quit. Your progress has been saved.")
+                    return [score,True]
+                else:
+                    print(f"{Colors.FAIL}Wrong answer. The correct answer was: {Colors.OKGREEN}{question['correct_answer']}")
+                    print(Colors.ENDC)
     return [score,False]
 
 
