@@ -158,8 +158,9 @@ def start_quiz():
 
             if choice.isdigit() and choice in categories.keys():
                 break  
-
-            print("Invalid category. Please try again.")
+            
+            print("\nInvalid category ! Please try again.")
+            print("\nUploading of Categories...... , be patient")
 
         category = categories.get(choice)
 
