@@ -8,6 +8,8 @@ import csv
 import datetime
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+
 
 class MainWindow(QMainWindow):
     def __init__(self, username, users):
@@ -16,19 +18,47 @@ class MainWindow(QMainWindow):
         self.username = username  # Save username if needed
         self.setWindowTitle("Quiz Application")
         self.setGeometry(100, 100, 400, 300)
+        
+        # Set main style
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: #F7F9FB;
+            }
+            QLabel {
+                color: #34495E;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            QPushButton {
+                background-color: #3498DB;
+                color: white;
+                font-size: 14px;
+                border: none;
+                border-radius: 10px;
+                padding: 10px 20px;
+            }
+            QPushButton:hover {
+                background-color: #2980B9;
+            }
+            QPushButton:pressed {
+                background-color: #1C5980;
+            }
+        """)
 
         # Title and Creator Labels
         self.LabelTitle = QLabel("Welcome to the Quiz Application", self)
         self.LabelTitle.setAlignment(Qt.AlignCenter)
+        self.LabelTitle.setStyleSheet("font-size: 20px; margin-bottom: 20px;")
         
         self.LabelCreator = QLabel(
-            "Created by: BOUDJELIDA Yanis,\n"
+            "Created by: \nBOUDJELIDA Yanis,\n"
             "BRAHIM DJELLOUL ANTRI Hichem,\n"
-            "MOULOUDJ Mojhamed,\n"
+            "MOULOUDJ Mohamed,\n"
             "FIALA Zackaria",
             self
         )
         self.LabelCreator.setAlignment(Qt.AlignCenter)
+        self.LabelCreator.setStyleSheet("font-size: 14px; margin-bottom: 30px; color: #7F8C8D;")
 
         # Start Quiz Button
         self.StartQuizButton = QPushButton("Start Quiz", self)
@@ -59,34 +89,133 @@ class AuthWindow(QWidget):
         super().__init__()
         self.setWindowTitle("Authentication Page")
         self.setGeometry(100, 100, 400, 300)
+        
+        # Main layout
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
 
+        # Header Label
         self.headerLabel = QLabel("Login")
         self.headerLabel.setAlignment(Qt.AlignCenter)
+        self.headerLabel.setFont(QFont("Arial", 18, QFont.Bold))
+        self.headerLabel.setStyleSheet("color: #2C3E50; margin-bottom: 20px;")
 
+        # Username Label and Input
         self.nameLabel = QLabel("Username:")
+        self.nameLabel.setFont(QFont("Arial", 12))
+        self.nameLabel.setStyleSheet("color: #34495E; margin-top: 10px;")
+
         self.nameInput = QLineEdit()
         self.nameInput.setPlaceholderText("Enter your username")
+        self.nameInput.setFont(QFont("Arial", 11))
+        self.nameInput.setStyleSheet("""
+            QLineEdit {
+                border: 1px solid #7F8C8D;
+                border-radius: 5px;
+                padding: 8px;
+                font-size: 14px;
+                background-color: #ECF0F1;
+            }
+            QLineEdit:focus {
+                border: 1px solid #3498DB;
+            }
+        """)
 
+        # Login Button
+        self.loginButton = QPushButton("Login")
+        self.loginButton.setFont(QFont("Arial", 12, QFont.Bold))
+        self.loginButton.setCursor(Qt.PointingHandCursor)
+        self.loginButton.setStyleSheet("""
+            QPushButton {
+                background-color: #3498DB;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 10px;
+            }
+            QPushButton:hover {
+                background-color: #2980B9;
+            }
+            QPushButton:pressed {
+                background-color: #1C5980;
+            }
+        """)
+        self.loginButton.clicked.connect(self.handle_login)  # Connect to a method
+
+        # Adding widgets to the layout
         self.layout.addWidget(self.headerLabel)
         self.layout.addWidget(self.nameLabel)
         self.layout.addWidget(self.nameInput)
-
-        self.loginButton = QPushButton("Login")
-        self.loginButton.clicked.connect(self.handle_login)  # Connect to a method
         self.layout.addWidget(self.loginButton)
+
+        # Add some spacing
+        self.layout.setSpacing(15)
 
     def handle_login(self):
         """Handles login logic."""
         username = self.nameInput.text().strip()
-        if username:  # Check if the username is not empty
+        
+        # Check if the username is not empty
+        if username:
             backend = AuthBackEnd(username, self)  # Create an instance of AuthBackEnd
-            QMessageBox.information(self, "Success", f"Welcome, {username}!")
+            
+            # Success message
+            success_box = QMessageBox(self)
+            success_box.setWindowTitle("Success")
+            success_box.setText(f"Welcome, {username}!")
+            success_box.setIcon(QMessageBox.Information)
+            success_box.setStyleSheet("""
+                QMessageBox {
+                    background-color: #ECF0F1;
+                    color: #2C3E50;
+                    font-size: 14px;
+                }
+                QPushButton {
+                    background-color: #3498DB;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #2980B9;
+                }
+                QPushButton:pressed {
+                    background-color: #1C5980;
+                }
+            """)
+            success_box.exec_()
+            
             self.close()  # Close the authentication window
-            self.show_categories_window(username,backend.getUser())  # Show categories after login
+            self.show_categories_window(username, backend.getUser())  # Show categories after login
+        
         else:
-            QMessageBox.warning(self, "Error", "Username cannot be empty!")
+            # Warning message for empty username
+            warning_box = QMessageBox(self)
+            warning_box.setWindowTitle("Error")
+            warning_box.setText("Username cannot be empty!")
+            warning_box.setIcon(QMessageBox.Warning)
+            warning_box.setStyleSheet("""
+                QMessageBox {
+                    background-color: #FDEDEC;
+                    color: #C0392B;
+                    font-size: 14px;
+                }
+                QPushButton {
+                    background-color: #E74C3C;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #C0392B;
+                }
+                QPushButton:pressed {
+                    background-color: #A93226;
+                }
+            """)
+            warning_box.exec_()
 
     def show_categories_window(self, username,users):
         """Show the categories window after login."""
@@ -95,13 +224,13 @@ class AuthWindow(QWidget):
 
 
 class CategorieLabel(QWidget):
-    def __init__(self, parent,username,users):
+    def __init__(self, parent, username, users):
         super().__init__(parent)
         self.categories = self.load_categories()[0]
         self.questions_by_category = self.load_categories()[1]
         self.username = username
         self.users = users
-        print(self.questions_by_category)
+
         self.layoutCategories = QGridLayout(self)
 
         # Create a scroll area to hold the category labels
@@ -111,50 +240,73 @@ class CategorieLabel(QWidget):
 
         self.layoutCategories.addWidget(scroll_area)
 
+        # Apply styles
+        self.setStyleSheet("""
+            QScrollArea {
+                background-color: #f9f9f9;
+                border: 1px solid #dcdcdc;
+                border-radius: 5px;
+            }
+            QPushButton {
+                font-size: 14px;
+                font-family: 'Arial';
+                background-color: #007BFF;
+                color: white;
+                padding: 8px 15px;
+                border-radius: 5px;
+                border: none;
+            }
+            QPushButton:hover {
+                background-color: #0056b3;
+            }
+        """)
+
     def create_categories_widget(self):
         """Create a widget to hold category labels."""
         category_widget = QWidget(self)
         category_layout = QVBoxLayout(category_widget)
 
-        # Add a label for each category
+        # Add a button for each category
         for category in self.categories:
             button = QPushButton(category, self)
-            button.clicked.connect(self.handle_category_click)
+            button.clicked.connect(lambda: self.handle_category_click(category))
             category_layout.addWidget(button)
 
         return category_widget
 
-    def handle_category_click(self):
+    def handle_category_click(self,categorie):
         """Handle category button click."""
         button = self.sender()
-        # print("Category selected:", button.text(), "\n", self.categories[1])
         questions = self.questions_by_category[button.text()]
-        print(questions)
-        self.quiz_window = QuizLabel(questions,self.username,self.users)
+        self.quiz_window = QuizLabel(questions, self.username, self.users,categorie)
         self.quiz_window.show()
 
     def load_categories(self):
         """Load categories from the JSON2 file."""
-        with open("questions2.json", 'r') as f:
+        with open("questions.json", 'r') as f:
             questions_by_category = json.load(f)
 
-        # Convert the dictionary of categories into a list
-        categories = [category for category in questions_by_category.keys()]
-        return categories,questions_by_category
+        categories = list(questions_by_category.keys())
+        return categories, questions_by_category
 
 
 class QuizLabel(QWidget):
-    def __init__(self, questions, username,users, parent=None):
+    def __init__(self, questions, username, users,categorie, parent=None):
         super().__init__(parent)
+        self.setWindowTitle("Quiz")
+        self.setMinimumSize(400, 300)
         self.layout = QVBoxLayout(self)
+        self.categorie = categorie
         self.questions = questions
         self.username = username
         self.users = users
         self.score = 0
-
         self.idx = 0  # Keeps track of the current question
+
         self.question_label = QLabel("", self)
         self.question_label.setAlignment(Qt.AlignCenter)
+        self.question_label.setWordWrap(True)
+
         self.group = QGroupBox("Options", self)
         radio_layout = QVBoxLayout()
         self.group.setLayout(radio_layout)
@@ -167,9 +319,40 @@ class QuizLabel(QWidget):
         self.layout.addWidget(self.submit_button)
 
         self.labelCorrect = QLabel("", self)
+        self.labelCorrect.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.labelCorrect)
 
-        self.display_question(self.idx)  # Display the first question
+        self.display_question(self.idx)
+
+        # Apply styles
+        self.setStyleSheet("""
+            QLabel {
+                font-family: 'Arial';
+                font-size: 16px;
+            }
+            QGroupBox {
+                font-family: 'Arial';
+                font-size: 14px;
+                border: 1px solid #dcdcdc;
+                border-radius: 5px;
+                padding: 10px;
+            }
+            QRadioButton {
+                font-size: 14px;
+            }
+            QPushButton {
+                font-size: 14px;
+                font-family: 'Arial';
+                background-color: #28a745;
+                color: white;
+                padding: 8px 15px;
+                border-radius: 5px;
+                border: none;
+            }
+            QPushButton:hover {
+                background-color: #218838;
+            }
+        """)
 
     def display_question(self, idx):
         """Displays the current question and its options."""
@@ -196,12 +379,17 @@ class QuizLabel(QWidget):
                 break
 
         if selected_answer:
-            correct_answer = self.questions[self.idx]['correct_answer']
-            self.check_answer(selected_answer, correct_answer)
-            self.idx += 1  # Move to the next question
+            # Ensure self.idx is within bounds before accessing self.questions
             if self.idx < len(self.questions):
-                QTimer.singleShot(1000, lambda: self.display_question(self.idx))  # Show next question after delay
+                correct_answer = self.questions[self.idx]['correct_answer']
+                self.check_answer(selected_answer, correct_answer)
+                self.idx += 1  # Move to the next question
+
+            if self.idx < len(self.questions):
+                # Show the next question after a delay
+                QTimer.singleShot(1000, lambda: self.display_question(self.idx))
             else:
+                # Finish the quiz when no more questions are left
                 QTimer.singleShot(1000, lambda: self.show_finish_dialog())
         else:
             QMessageBox.warning(self, "Error", "Please select an answer.")
@@ -212,6 +400,7 @@ class QuizLabel(QWidget):
             QMessageBox.warning(self, "Error", f"The correct answer was: {correct_answer}")
         else:
             self.score += 1
+
     def show_finish_dialog(self):
         """Show dialog when quiz finishes."""
         message_box = QMessageBox(self)
@@ -225,9 +414,10 @@ class QuizLabel(QWidget):
             self.save_result()
             self.export_results_to_csv()
             self.close()
-        else: 
+        else:
             self.save_result()
             self.close()
+
 
     def export_results_to_csv(self):
         """Export a user's results to a CSV file."""
@@ -247,7 +437,7 @@ class QuizLabel(QWidget):
         current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.users[self.username]['history'].append({
             'date': current_date,
-            'category': category,
+            'category': self.categorie,
             'score': f"{self.score}/{questions_count}",
             'quit': False
         })

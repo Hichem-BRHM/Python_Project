@@ -36,6 +36,24 @@
                 "category": "General Knowledge",
                 "score": "1/2",
                 "quit": false
+            },
+            {
+                "date": "2025-01-15 02:43:05",
+                "category": "General Knowledge",
+                "score": "2/2",
+                "quit": false
+            },
+            {
+                "date": "2025-01-15 02:48:01",
+                "category": "General Knowledge",
+                "score": "2/2",
+                "quit": false
+            },
+            {
+                "date": "2025-01-15 02:49:59",
+                "category": "Science",
+                "score": "10/20",
+                "quit": false
             }
         ]
     }
