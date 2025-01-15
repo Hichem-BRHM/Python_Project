@@ -1,0 +1,42 @@
+{
+    "": {
+        "history": []
+    },
+    "test": {
+        "history": []
+    },
+    "a": {
+        "history": [
+            {
+                "date": "2025-01-14 23:39:07",
+                "category": "General Knowledge",
+                "score": "2/2",
+                "quit": false
+            },
+            {
+                "date": "2025-01-15 00:42:31",
+                "category": "General Knowledge",
+                "score": "2/2",
+                "quit": false
+            },
+            {
+                "date": "2025-01-15 01:05:10",
+                "category": "General Knowledge",
+                "score": "1/2",
+                "quit": false
+            },
+            {
+                "date": "2025-01-15 01:16:58",
+                "category": "General Knowledge",
+                "score": "1/2",
+                "quit": false
+            },
+            {
+                "date": "2025-01-15 01:28:33",
+                "category": "General Knowledge",
+                "score": "1/2",
+                "quit": false
+            }
+        ]
+    }
+}

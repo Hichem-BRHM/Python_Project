@@ -1,0 +1,20 @@
+{
+    
+  
+    "General Knowledge": [
+      {
+        "question": "What is the largest ocean in the world?",
+        "options": ["Atlantic", "Pacific", "Indian", "Arctic"],
+        "correct_answer": "Pacific"
+      },
+      {
+        "question": "What is the capital of Australia?",
+        "options": ["Sydney", "Melbourne", "Canberra", "Perth"],
+        "correct_answer": "Canberra"
+      }
+    ]
+   
+    
+  }
+  
+  
