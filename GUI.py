@@ -454,16 +454,15 @@ class QuizLabel(QWidget):
     def save_result(self):
         """Save the result of a quiz for a user."""
         questions_count = len(self.questions)
-        category = "General Knowledge"  # Example, adjust based on your question's category
 
         current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.users[self.username]['history'].append({
-            'date': current_date,
-            'category': self.categorie,
-            'score': f"{self.score}/{questions_count}",
-            'quit': False
-        })
-        save_users(self.users)  # Assuming you have a function to save user data
+        self.users[self.username]['history'].append({'date': current_date, 'category':self.categorie, 'score': f"{self.score}/{questions_count}", 'quit': False})
+        self.save_users() 
+    
+    def save_users(self, file='users.json'):
+        """Save user data to a JSON file."""
+        with open(file, 'w') as f:
+            json.dump(self.users, f, indent=4)
 
 
 class BackEnd:
