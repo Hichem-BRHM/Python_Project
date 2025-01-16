@@ -4,3 +4,4 @@
 # Unignore
 !questions.json
 !*/*.py
+!README.md
