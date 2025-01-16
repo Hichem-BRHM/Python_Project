@@ -1,6 +1,4 @@
 import json
-import os
-import csv
 import datetime
 import sys
 from PyQt5.QtCore import *
