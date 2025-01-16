@@ -356,21 +356,16 @@ class QuizLabel(QWidget):
         self.question_label.setAlignment(Qt.AlignCenter)
         self.question_label.setWordWrap(True)
 
-        self.timerLabel = QLabel("",self)
-        self.timerLabel.setFont(QFont("Arial", 32))
-        self.timerLabel.setAlignment(Qt.AlignCenter)
-
         self.group = QGroupBox("Options", self)
         self.group.setLayout(QVBoxLayout())
 
         self.layout.addWidget(self.question_label)
-        self.layout.addWidget(self.timerLabel)
         self.layout.addWidget(self.group)
 
         self.group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.submit_button = QPushButton("Submit", self)
-        self.submit_button.clicked.connect(lambda: self.handle_submit(False))
+        self.submit_button.clicked.connect(self.handle_submit)
         self.layout.addWidget(self.submit_button)
 
         self.labelCorrect = QLabel("", self)
@@ -428,18 +423,14 @@ class QuizLabel(QWidget):
         quit_button = QRadioButton("Quit", self)
         self.group.layout().addWidget(quit_button)
 
-        self.display_timer(TIME_PER_SECOND)
 
-    def handle_submit(self,timeEnd):
+    def handle_submit(self):
         """Handles the submit button click."""
-        if timeEnd == True : 
-            selected_answer = " "
-        else :
-            selected_answer = None
-            for radio_button in self.group.findChildren(QRadioButton):
-                if radio_button.isChecked():
-                    selected_answer = radio_button.text()
-                    break
+        selected_answer = None
+        for radio_button in self.group.findChildren(QRadioButton):
+            if radio_button.isChecked():
+                selected_answer = radio_button.text()
+                break
         
 
         if selected_answer:
@@ -496,22 +487,6 @@ class QuizLabel(QWidget):
         # Return to parent (CategorieLabel)
         if self.return_to_parent:
             self.return_to_parent()
-
-    def display_timer(self, time_left):
-        """Display a countdown timer for the remaining time."""
-        self.timer = QTimer(self)
-        self.time_left = time_left
-
-        def update_timer():
-            if self.time_left >= 0:
-                self.timerLabel.setText(f"Time: {self.time_left} s")
-                self.time_left -= 1
-            else:
-                self.timer.stop()
-                self.handle_submit(True)
-
-        self.timer.timeout.connect(update_timer)
-        self.timer.start(1000)  # Timer ticks every second
 
     
         
