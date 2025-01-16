@@ -31,3 +31,7 @@ This project represents a small program that allows user to test his knowledge i
    ```bash
    python GUI.py
    ```
+
+## Useful Links
+
+- [Drive](https://drive.google.com/drive/folders/1NrkSnAPx4Q1njaDDE-kAsc_I7y8JH-NY?usp=sharing)

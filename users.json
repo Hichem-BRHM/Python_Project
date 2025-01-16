@@ -16,7 +16,14 @@
         "history": []
     },
     "user123": {
-        "history": []
+        "history": [
+            {
+                "date": "2025-01-17 00:11:20",
+                "category": "Programming",
+                "score": "2/20",
+                "quit": true
+            }
+        ]
     },
     "user": {
         "history": [
@@ -31,6 +38,12 @@
                 "category": "Programming",
                 "score": "2/2",
                 "quit": false
+            },
+            {
+                "date": "2025-01-17 00:50:39",
+                "category": "Programming",
+                "score": "2/20",
+                "quit": true
             }
         ]
     },

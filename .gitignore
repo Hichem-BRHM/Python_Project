@@ -1,7 +1,8 @@
 # Ignore all files
 *
+users.json
 
 # Unignore
 !questions.json
 !*/*.py
-README.md
+!README.md

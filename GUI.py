@@ -353,13 +353,26 @@ class QuizLabel(QWidget):
 
         self.question_label = QLabel("", self)
         self.question_label.setFont(QFont("Arial", 32))
-        self.question_label.setAlignment(Qt.AlignCenter)
+        self.question_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
         self.question_label.setWordWrap(True)
+
+        self.timerLabel = QLabel("", self)
+        self.timerLabel.setFont(QFont("Arial", 32))
+        self.timerLabel.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+
+        # Header Container
+        self.headerContainer = QHBoxLayout()
+        self.headerContainer.addWidget(self.question_label)
+        self.headerContainer.addWidget(self.timerLabel)
+
+        # Wrapper for Header Container (Layouts are not widgets)
+        header_widget = QWidget(self)
+        header_widget.setLayout(self.headerContainer)
 
         self.group = QGroupBox("Options", self)
         self.group.setLayout(QVBoxLayout())
 
-        self.layout.addWidget(self.question_label)
+        self.layout.addWidget(header_widget)
         self.layout.addWidget(self.group)
 
         self.group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -423,30 +436,61 @@ class QuizLabel(QWidget):
         quit_button = QRadioButton("Quit", self)
         self.group.layout().addWidget(quit_button)
 
+        # Start timer for the question
+        self.start_timer()
 
-    def handle_submit(self):
-        """Handles the submit button click."""
+    def start_timer(self):
+        """Starts the timer for the current question."""
+        if hasattr(self, "timer") and self.timer.isActive():
+            self.timer.stop()  # Stop the previous timer if active
+
+        self.time_left = TIME_PER_SECOND
+        self.timerLabel.setText(f"Time: {self.time_left} s")
+
+        def update_timer():
+            if self.time_left > 0:
+                self.timerLabel.setText(f"Time: {self.time_left} s")
+                self.time_left -= 1
+            else:
+                self.timer.stop()
+                self.handle_submit(auto_next=True)
+
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(update_timer)
+        self.timer.start(1000)  # Tick every second
+
+    def handle_submit(self, auto_next=False):
+        """Handles the submit button click or auto-submit."""
         selected_answer = None
         for radio_button in self.group.findChildren(QRadioButton):
             if radio_button.isChecked():
                 selected_answer = radio_button.text()
                 break
-        
 
-        if selected_answer:
-            # Ensure self.idx is within bounds before accessing self.questions
-            if self.idx < len(self.questions):
+        # Stop the timer when submitting
+        if hasattr(self, "timer") and self.timer.isActive():
+            self.timer.stop()
+
+        if selected_answer or auto_next:
+            # Check the answer or handle timeout
+            if auto_next:
+                selected_answer = "Timeout"
+                correct_answer = None  # No correct answer for timeout
+            else:
                 correct_answer = self.questions[self.idx]['correct_answer']
-                result=self.check_answer(selected_answer, correct_answer)
-                if result==-1:
+
+            if not auto_next:
+                result = self.check_answer(selected_answer, correct_answer)
+                if result == -1:
                     return
-                self.idx += 1  # Move to the next question
+
+            self.idx += 1  # Move to the next question
             if self.idx < len(self.questions):
                 # Show the next question after a delay
                 QTimer.singleShot(1000, lambda: self.display_question(self.idx))
             else:
                 # Finish the quiz when no more questions are left
-                QTimer.singleShot(1000, lambda: self.show_finish_dialog(False))
+                QTimer.singleShot(1000, lambda: self.show_finish_dialog(auto_next))
         else:
             QMessageBox.warning(self, "Error", "Please select an answer.")
 
@@ -488,22 +532,6 @@ class QuizLabel(QWidget):
         if self.return_to_parent:
             self.return_to_parent()
 
-    
-        
-
-
-    # def save_result(self):
-    #     """Save the result of a quiz for a user."""
-    #     questions_count = len(self.questions)
-
-    #     current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    #     self.users[self.username]['history'].append({'date': current_date, 'category':self.categorie, 'score': f"{self.score}/{questions_count}", 'quit': False})
-    #     self.save_users() 
-    
-    # def save_users(self, file='users.json'):
-    #     """Save user data to a JSON file."""
-    #     with open(file, 'w') as f:
-    #         json.dump(self.users, f, indent=4)
 
 
 class BackEnd:
