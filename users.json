@@ -19,7 +19,20 @@
         "history": []
     },
     "user": {
-        "history": []
+        "history": [
+            {
+                "date": "2025-01-16 17:30:42",
+                "category": "Programming",
+                "score": "1/2",
+                "quit": true
+            },
+            {
+                "date": "2025-01-16 17:31:08",
+                "category": "Programming",
+                "score": "2/2",
+                "quit": false
+            }
+        ]
     },
     "a": {
         "history": [

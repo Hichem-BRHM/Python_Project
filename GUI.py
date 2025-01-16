@@ -91,8 +91,8 @@ class MainWindow(QMainWindow):
     def start_quiz(self):
         """Start the quiz by displaying the category label."""
         # Assuming CategorieLabel is defined elsewhere and takes these parameters
-        self.category_label = CategorieLabel(self, self.username, self.backend)
-        self.layout.addWidget(self.category_label)
+        self.category_widget = CategorieLabel(self, self.username, self.backend)
+        self.layout.addWidget(self.category_widget)
         self.LabelTitle.hide()
         self.LabelCreator.hide()
         self.StartQuizButton.hide()
@@ -200,12 +200,14 @@ class AuthWindow(QWidget):
             profile = backend.create_user_profile()
             if type(profile) != list:
                 success_box.setInformativeText("Your profile has been created.")
-            else:
+            elif len(profile) != 0:
                 success_box.setInformativeText("Here is your quiz history:")
+                history=''
                 for entry in profile:
-                    success_box.setDetailedText(f"Date: {entry['date']} - Category: {entry['category']} --> Score: {entry['score']}, Quit: {entry['quit']}")
+                    history += f"Date: {entry['date']} - Category: {entry['category']} --> Score: {entry['score']}, Quit: {entry['quit']}"
+                success_box.setDetailedText(history)
             success_box.setStandardButtons(QMessageBox.Ok)
-            success_box.resize(800, 500)
+            success_box.resize(800, 600)
             success_box.exec_()
             
             self.close()  # Close the authentication window
@@ -253,14 +255,22 @@ class CategorieLabel(QWidget):
         self.username = username
         self.users = backend.getUsers()
 
-        self.layoutCategories = QVBoxLayout(self)
+        self.container_layout = QVBoxLayout(self)
+
+        self.titleLabel=QLabel("Choose a category:", self)
+        self.titleLabel.setAlignment(Qt.AlignLeft)
+        self.titleLabel.setAlignment(Qt.AlignVCenter)
+        self.titleLabel.setFont(QFont("Arial", 64, QFont.Bold))
+        self.titleLabel.setStyleSheet("color: #34495E; margin-bottom: 20px;")
+
+        self.container_layout.addWidget(self.titleLabel)
 
         # Create a scroll area to hold the category labels
-        scroll_area = QScrollArea(self)
-        scroll_area.setWidgetResizable(True)
-        scroll_area.setWidget(self.create_categories_widget())
+        self.scroll_area = QScrollArea(self)
+        self.scroll_area.setWidgetResizable(True)
+        self.scroll_area.setWidget(self.create_categories_widget())
 
-        self.layoutCategories.addWidget(scroll_area)
+        self.container_layout.addWidget(self.scroll_area)
 
         # Apply styles
         self.setStyleSheet("""
@@ -293,8 +303,9 @@ class CategorieLabel(QWidget):
         for i,category in self.categories.items():
             button = QPushButton(category, self)
             button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            button.setCursor(Qt.PointingHandCursor)
             button.clicked.connect(lambda checked, cat=category: self.handle_category_click(cat))
-            category_layout.addWidget(button,rows,int(i))
+            category_layout.addWidget(button,rows,(int(i)-1)%4)
             if int(i) % 4 == 0:
                 rows=rows+1
 
@@ -307,34 +318,50 @@ class CategorieLabel(QWidget):
         """Handle category button click."""
         button = self.sender()
         questions = self.questions_by_category[button.text()]
-        self.quiz_window = QuizLabel(questions, self.username, self.users,categorie)
-        self.quiz_window.show()
+        self.quiz_widget = QuizLabel(questions, self.username, self.users, categorie, parent=self)
+        self.container_layout.addWidget(self.quiz_widget)
+        self.quiz_widget.return_to_parent = self.show_parent_widgets
+        self.titleLabel.hide()
+        self.scroll_area.hide()
 
+    def show_parent_widgets(self):
+        """Show the parent widgets."""
+        if hasattr(self, "quiz_widget"):
+            self.container_layout.removeWidget(self.quiz_widget)
+            self.quiz_widget.deleteLater()
+            del self.quiz_widget
+
+        self.titleLabel.show()
+        self.scroll_area.show()
 
 
 class QuizLabel(QWidget):
-    def __init__(self, questions, username, users,categorie, parent=None):
+    def __init__(self, questions, username, users, categorie, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Quiz")
         self.setMinimumSize(400, 300)
         self.layout = QVBoxLayout(self)
+        self.layout.setAlignment(Qt.AlignCenter)
         self.categorie = categorie
         self.questions = questions
         self.username = username
         self.users = users
         self.score = 0
         self.idx = 0  # Keeps track of the current question
+        self.return_to_parent = None
 
         self.question_label = QLabel("", self)
+        self.question_label.setFont(QFont("Arial", 32))
         self.question_label.setAlignment(Qt.AlignCenter)
         self.question_label.setWordWrap(True)
 
         self.group = QGroupBox("Options", self)
-        radio_layout = QVBoxLayout()
-        self.group.setLayout(radio_layout)
+        self.group.setLayout(QVBoxLayout())
 
         self.layout.addWidget(self.question_label)
         self.layout.addWidget(self.group)
+
+        self.group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.submit_button = QPushButton("Submit", self)
         self.submit_button.clicked.connect(self.handle_submit)
@@ -350,20 +377,20 @@ class QuizLabel(QWidget):
         self.setStyleSheet("""
             QLabel {
                 font-family: 'Arial';
-                font-size: 16px;
+                font-size: 24px;
             }
             QGroupBox {
                 font-family: 'Arial';
-                font-size: 14px;
+                font-size: 20px;
                 border: 1px solid #dcdcdc;
                 border-radius: 5px;
                 padding: 10px;
             }
             QRadioButton {
-                font-size: 14px;
+                font-size: 20px;
             }
             QPushButton {
-                font-size: 14px;
+                font-size: 20px;
                 font-family: 'Arial';
                 background-color: #28a745;
                 color: white;
@@ -378,6 +405,7 @@ class QuizLabel(QWidget):
 
     def display_question(self, idx):
         """Displays the current question and its options."""
+        # question is actually a list of questions
         question = self.questions[idx]
         self.question_label.setText(question["question"])
 
@@ -391,6 +419,8 @@ class QuizLabel(QWidget):
         for option in question['options']:
             radio_button = QRadioButton(option, self)
             self.group.layout().addWidget(radio_button)
+        quit_button = QRadioButton("Quit", self)
+        self.group.layout().addWidget(quit_button)
 
     def handle_submit(self):
         """Handles the submit button click."""
@@ -404,26 +434,32 @@ class QuizLabel(QWidget):
             # Ensure self.idx is within bounds before accessing self.questions
             if self.idx < len(self.questions):
                 correct_answer = self.questions[self.idx]['correct_answer']
-                self.check_answer(selected_answer, correct_answer)
+                result=self.check_answer(selected_answer, correct_answer)
+                if result==-1:
+                    return
                 self.idx += 1  # Move to the next question
-
             if self.idx < len(self.questions):
                 # Show the next question after a delay
                 QTimer.singleShot(1000, lambda: self.display_question(self.idx))
             else:
                 # Finish the quiz when no more questions are left
-                QTimer.singleShot(1000, lambda: self.show_finish_dialog())
+                QTimer.singleShot(1000, lambda: self.show_finish_dialog(False))
         else:
             QMessageBox.warning(self, "Error", "Please select an answer.")
 
     def check_answer(self, answer, correct_answer):
         """Check if the answer is correct."""
+        if answer == "Quit":
+            self.users[self.username]['history'].append({'date': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 'category':self.categorie, 'score': f"{self.score}/{len(self.questions)}", 'quit': True})
+            self.show_finish_dialog(True)
+            return -1
         if answer != correct_answer:
             QMessageBox.warning(self, "Error", f"The correct answer was: {correct_answer}")
         else:
             self.score += 1
+        return 1
 
-    def show_finish_dialog(self):
+    def show_finish_dialog(self,quit=False):
         """Show dialog when quiz finishes."""
         message_box = QMessageBox(self)
         message_box.setIcon(QMessageBox.Question)
@@ -433,40 +469,40 @@ class QuizLabel(QWidget):
         response = message_box.exec_()
 
         if response == QMessageBox.Yes:
-            self.save_result()
-            self.export_results_to_csv()
-            self.close()
+            if quit:
+                backend_functions.save_result(self.username, self.users, len(self.questions), self.categorie,"")
+                backend_functions.export_results_to_csv(self.username,self.users)
+            else:
+                backend_functions.save_result(self.username, self.users, len(self.questions), self.categorie, self.score)
+                backend_functions.export_results_to_csv(self.username,self.users)
+            QMessageBox.information(self, "History Saved", f"Your results have been saved to {self.username}_results.csv.")
         else:
-            self.save_result()
-            self.close()
+            if quit:
+                backend_functions.save_result(self.username, self.users, len(self.questions), self.categorie, self.score)
+        
+        QMessageBox.information(self, "Your final score", f"Your final score is: {self.score}/{len(self.questions)}")
+        # Return to parent (CategorieLabel)
+        if self.return_to_parent:
+            self.return_to_parent()
+        
 
 
-    def export_results_to_csv(self):
-        """Export a user's results to a CSV file."""
-        file_name = f"{self.username}_results.csv"
-        with open(file_name, 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(["Date", "Score", "Category", "Quit"])
-            for entry in self.users[self.username]['history']:
-                writer.writerow([entry['date'], entry['score'], entry['category'], entry['quit']])
-        QMessageBox.information(self, "History Saved", f"Your results have been saved to {file_name}.")
+    # def save_result(self):
+    #     """Save the result of a quiz for a user."""
+    #     questions_count = len(self.questions)
 
-    def save_result(self):
-        """Save the result of a quiz for a user."""
-        questions_count = len(self.questions)
-
-        current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.users[self.username]['history'].append({'date': current_date, 'category':self.categorie, 'score': f"{self.score}/{questions_count}", 'quit': False})
-        self.save_users() 
+    #     current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #     self.users[self.username]['history'].append({'date': current_date, 'category':self.categorie, 'score': f"{self.score}/{questions_count}", 'quit': False})
+    #     self.save_users() 
     
-    def save_users(self, file='users.json'):
-        """Save user data to a JSON file."""
-        with open(file, 'w') as f:
-            json.dump(self.users, f, indent=4)
+    # def save_users(self, file='users.json'):
+    #     """Save user data to a JSON file."""
+    #     with open(file, 'w') as f:
+    #         json.dump(self.users, f, indent=4)
 
 
 class BackEnd:
-    def __init__(self, username=None):
+    def __init__(self):
         self.users = backend_functions.load_users()
         with open("questions.json", 'r') as f:
             self.questions_by_category = json.load(f)

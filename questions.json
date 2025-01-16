@@ -9,6 +9,116 @@
       "question": "What data type is returned by `len()` in Python?",
       "options": ["int", "str", "list", "float"],
       "correct_answer": "int"
+    },
+    {
+      "question": "Which method is used to add an element to a list?",
+      "options": ["add()", "insert()", "append()", "push()"],
+      "correct_answer": "append()"
+    },
+    {
+      "question": "What do you call a function that calls itself?",
+      "options": ["Iterative", "Recursive", "Anonymous", "Generic"],
+      "correct_answer": "Recursive"
+    },
+    {
+      "question": "What keyword is used to define a function in Python?",
+      "options": ["function", "def", "fun", "declare"],
+      "correct_answer": "def"
+    },
+    {
+      "question": "How do you declare a global variable in Python?",
+      "options": [
+        "global var_name",
+        "var_name global",
+        "global: var_name",
+        "declare global var_name"
+      ],
+      "correct_answer": "global var_name"
+    },
+    {
+      "question": "What method is used to get the length of a string in Python?",
+      "options": ["length()", "len()", "size()", "str_len()"],
+      "correct_answer": "len()"
+    },
+    {
+      "question": "What does `PEP` stand for in Python?",
+      "options": [
+        "Python Execution Protocol",
+        "Python Enhancement Proposal",
+        "Programming Execution Plan",
+        "Process Extension Plan"
+      ],
+      "correct_answer": "Python Enhancement Proposal"
+    },
+    {
+      "question": "Which Python library is used for data processing?",
+      "options": ["NumPy", "DataHandler", "SciKit", "Pandas"],
+      "correct_answer": "Pandas"
+    },
+    {
+      "question": "What is the LIFO data structure?",
+      "options": ["Queue", "Deque", "Stack", "Priority Queue"],
+      "correct_answer": "Stack"
+    },
+    {
+      "question": "What is the default value of the `end` argument in `print()`?",
+      "options": ["''", "' '", "'\\n'", "'\\t'"],
+      "correct_answer": "'\\n'"
+    },
+    {
+      "question": "Which Python module is used to handle JSON files?",
+      "options": ["json", "filejson", "os", "csv"],
+      "correct_answer": "json"
+    },
+    {
+      "question": "What does `type(42.0)` return?",
+      "options": [
+        "<class 'int'>",
+        "<class 'float'>",
+        "<class 'complex'>",
+        "<class 'decimal'>"
+      ],
+      "correct_answer": "<class 'float'>"
+    },
+    {
+      "question": "What is the output of `print(2**3)`?",
+      "options": ["6", "8", "9", "16"],
+      "correct_answer": "8"
+    },
+    {
+      "question": "Which method is used to split a string by a delimiter in Python?",
+      "options": ["split()", "divide()", "tokenize()", "parse()"],
+      "correct_answer": "split()"
+    },
+    {
+      "question": "What symbol is used for a comment in Python?",
+      "options": ["//", "#", "--", "/*"],
+      "correct_answer": "#"
+    },
+    {
+      "question": "What command is used to install Python libraries?",
+      "options": [
+        "install library",
+        "pip install",
+        "python install",
+        "lib add"
+      ],
+      "correct_answer": "pip install"
+    },
+    {
+      "question": "How do you convert a string to an integer?",
+      "options": ["int()", "convert()", "to_int()", "str_to_int()"],
+      "correct_answer": "int()"
+    },
+    {
+      "question": "What keyword is used to catch exceptions?",
+      "options": ["catch", "except", "try", "throw"],
+      "correct_answer": "except"
+    },
+    {
+      "question": "What is the operator for integer division in Python?",
+      "options": ["%", "//", "/", "**"],
+      "correct_answer": "//"
     }
   ],
   "Networks": [

@@ -4,4 +4,3 @@
 # Unignore
 !questions.json
 !*/*.py
-!.gitignore

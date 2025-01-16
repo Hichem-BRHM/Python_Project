@@ -126,7 +126,6 @@ def save_result(user_id, users,questions_count,category, score):
     if score == "":
          save_users(users)
     else:
-        print("test")
         current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         users[user_id]['history'].append({'date': current_date, 'category':category, 'score': f"{score}/{questions_count}", 'quit': False})
         save_users(users)
