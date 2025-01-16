@@ -4,7 +4,7 @@ import datetime
 import csv
 import threading
 import time
-# import curses
+
 
 TIME_PER_SECOND = 20  # Time limit per question in seconds
 
