@@ -1,8 +1,6 @@
 import json
 import datetime
 import sys
-import threading
-import time
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -468,7 +466,7 @@ class QuizLabel(QWidget):
                 break
 
         # Stop the timer when submitting
-        if hasattr(self, "timer") and self.timer.isActive():
+        if hasattr(self, "timer") and self.timer.isActive() and selected_answer!=None:
             self.timer.stop()
 
         if selected_answer or auto_next:
@@ -476,6 +474,7 @@ class QuizLabel(QWidget):
             if auto_next:
                 selected_answer = "Timeout"
                 correct_answer = None  # No correct answer for timeout
+                QMessageBox.warning(self, "Wrong", f"The correct answer was: {self.questions[self.idx]['correct_answer']}")
             else:
                 correct_answer = self.questions[self.idx]['correct_answer']
 
@@ -490,8 +489,8 @@ class QuizLabel(QWidget):
                 QTimer.singleShot(1000, lambda: self.display_question(self.idx))
             else:
                 # Finish the quiz when no more questions are left
-                QTimer.singleShot(1000, lambda: self.show_finish_dialog(auto_next))
-        else:
+                QTimer.singleShot(1000, lambda: self.show_finish_dialog())
+        elif not selected_answer:
             QMessageBox.warning(self, "Error", "Please select an answer.")
 
     def check_answer(self, answer, correct_answer):
@@ -501,7 +500,7 @@ class QuizLabel(QWidget):
             self.show_finish_dialog(True)
             return -1
         if answer != correct_answer:
-            QMessageBox.warning(self, "Error", f"The correct answer was: {correct_answer}")
+            QMessageBox.warning(self, "Wrong", f"The correct answer was: {correct_answer}")
         else:
             self.score += 1
         return 1
@@ -531,7 +530,6 @@ class QuizLabel(QWidget):
         # Return to parent (CategorieLabel)
         if self.return_to_parent:
             self.return_to_parent()
-
 
 
 class BackEnd:
