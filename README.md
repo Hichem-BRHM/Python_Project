@@ -21,7 +21,7 @@ This project represents a small program that allows user to test his knowledge i
    ```
 3. Install the required libraries:
    ```bash
-   pip install `requirements`
+   pip install PyQt5 PyQt5-tools
    ```
 4. Run the main program:
    ```bash
