@@ -1,6 +1,6 @@
 # Quiz-App
 
-This project represents a small program that allows user to test his knowledge in diffrent subjects. The program will ask the user a series of questions and will provide feedback on the user's performance. The program will also provide a summary of the user's performance at the end of the test. It is both console-based and GUI-based application.
+This project represents a small program developed by our ByteForgeNexus team. It allows user to test his knowledge in diffrent subjects. The program will ask the user a series of questions and will provide feedback on the user's performance. The program will also provide a summary of the user's performance at the end of the test. It is both console-based and GUI-based application.
 
 ## Requirements
 
